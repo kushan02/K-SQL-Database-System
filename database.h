@@ -17,6 +17,7 @@ using namespace std;
 
 bool addEntrydb(char []);
 bool showDb();
+bool dropDB(char);
 
 bool addEntrydb(char ename[])
 {
@@ -83,9 +84,52 @@ bool showDb()
         return true;
 }
 
-bool delDb(char name[])
+bool dropDB(char name[])
 {
-        // TODO: Add delete functionality
+        // TODO: Delete the folder also
+
+
+        fstream f,o;
+        f.open("files/databases/DBRECORD.dat",ios::in);
+        o.open("files/databases/temp.dat",ios::out);
+
+        if(!f)
+        {
+                return false;
+        }
+
+
+        dbEntry obj;
+
+        bool found=false;
+
+        while(f.read((char*)&obj, sizeof(obj)))
+        {
+
+                if(cmp(obj.dbName,name))
+                {
+                        found = true;
+                        continue;
+                }
+
+                o.write( (char *)&obj, sizeof(obj));
+
+        }
+        f.close();
+        o.close();
+
+        remove("files/databases/DBRECORD.dat");
+        rename("files/databases/temp.dat","files/databases/DBRECORD.dat");
+
+
+        if(found==true)
+        {
+                return true;
+        }
+        else
+        {
+                return false;
+        }
 
 }
 

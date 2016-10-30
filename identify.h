@@ -77,7 +77,7 @@ void identify(char sql[][50], char *param) {
         }
         else if(cmp(sql[0],"exit"))
         {
-          strcpy(mode,"exit");
+                strcpy(mode,"exit");
         }
 
         else

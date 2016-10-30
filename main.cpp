@@ -3,7 +3,6 @@
 
 
 #include <iostream>
-#include "database.h"
 #include "global.h"
 #include <stdio.h>
 
@@ -18,39 +17,14 @@ int main()
 
         // TODO: Link the tables once completed with the given database
 
-        /* TODO : Create a options menu based off the database schema
-         * Create Database
-         * View Databases
-         * Delete Database
-         */
-/*
-        cout<<"Enter mode of database operation: ";
-        char c; cin>>c;
-
-        cout<<"Enter KSQL Command: ";
-
         char db[100];
-
-        cin.ignore(); //^^this is necessary
-
-
-        gets(db);
-
-        if(database(db,c))
+        while(1)
         {
-                cout<<endl<<endl<<"Query Executed Successfully!"<<endl;
+                std::cout << "ksql>> ";
+                gets(db);
+                parse(db);
+                std::cout << std::endl;
         }
-
-*/
-
-    char db[100];
-    while(1)
-    {
-    std::cout << "ksql>> ";
-    gets(db);
-    parse(db);
-    
-  }
 
 
         return 0;

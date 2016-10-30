@@ -150,7 +150,7 @@ bool isCreateDB(char db[][50]) {
 
 // cout << endl << "Sytax error: Please ensure correct syntax is used for creating database " << endl;
 
-
+                cout<<endl;
 
                 if(dname == false)
                 {
@@ -163,7 +163,7 @@ bool isCreateDB(char db[][50]) {
                 //if(cr == false || dat == false)
                 else
                 {
-                        cout<<"ERROR: The correct syntax should be \" Select Database <DBName> \" ";
+                        cout<<"ERROR: The correct syntax should be \" Create Database <DBName> \" ";
                 }
 
                 cout<<endl;
@@ -195,14 +195,15 @@ bool isShowDB(char db[][50]) {
 
         else {
 
+                cout<<endl;
 
                 if(extra == false)
                 {
-                        cout<<"ERROR: Unecessary syntax present. The correct syntax should be \" Show Database \" ";
+                        cout<<"ERROR: Unecessary syntax present. The correct syntax should be \" Show Databases \" ";
                 }
                 else
                 {
-                        cout<<"ERROR: The correct syntax should be \" Show Database \" ";
+                        cout<<"ERROR: The correct syntax should be \" Show Databases \" ";
                 }
 
                 cout<<endl;
@@ -211,5 +212,60 @@ bool isShowDB(char db[][50]) {
 
         }
 }
+
+bool isDropDB(char db[][50]) {
+
+        bool drop = true, data = true, dname = true, dsingle = true;
+
+        if (!cmp(db[0], "drop")) {
+                drop = false;
+        }
+        if(!cmp(db[1], "database"))
+        {
+                data = false;
+        }
+        if(db[2][0]=='\0' || db[2][0]==' ')
+        {
+                dname = false;
+        }
+        if(db[3][0] != '\0')
+        {
+                dsingle = false;
+        }
+
+/*  if (cmp(db[0], "create") && cmp(db[1], "database") && db[2] != NULL && db[3][0] == '\0') */
+
+        if(drop == true & data == true && dname == true && dsingle == true)
+        {
+                return true;
+        }
+
+        else {
+
+// cout << endl << "Sytax error: Please ensure correct syntax is used for creating database " << endl;
+
+                cout<<endl;
+
+                if(dname == false)
+                {
+                        cout<<"ERROR: Please specify a allowed name for database";
+                }
+                else if(dsingle == false)
+                {
+                        cout<<"ERROR: The database name can contain a single word only";
+                }
+                //if(cr == false || dat == false)
+                else
+                {
+                        cout<<"ERROR: The correct syntax should be \" Drop Database <DBName> \" ";
+                }
+
+                cout<<endl;
+
+                return false;
+
+        }
+}
+
 
 #endif // error

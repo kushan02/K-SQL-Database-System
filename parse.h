@@ -7,21 +7,19 @@
 
 #include <iostream>
 #include <string.h>
-#include <fstream>
-#include <iomanip>
 #include <process.h>
 
 #include "global.h"
 #include "error.h"
-#include "database.h"
 #include "identify.h"
+#include "handler.h"
 
 using namespace std;
 
-bool parse(char []);
+void parse(char []);
+void fatalerror();
 
-
-bool parse(char db[]) {
+void parse(char db[]) {
 
         char com[20][50]; // Double dimesnional array to store the parsed command
         char mode[50]; // to identify the mode of sql command to execute
@@ -55,7 +53,7 @@ bool parse(char db[]) {
 
         com[key+1][0] = '\0'; // Check for seeing the name of database is single word
 
-      //  cout << endl;
+        //  cout << endl;
 
         /*  Check to see if the parsing was working or not
 
@@ -100,49 +98,34 @@ bool parse(char db[]) {
         // CREATE DATABASE MODE
         if(cmp(mode,"createdb"))
         {
-
-                if (isCreateDB(com)) {
-                        if(createFolder(com[2])) {
-
-                                if(addEntrydb(com[2])) {
-                                        cout << endl << "Database "<<com[2]<<" created Successfully! "<<endl<<endl;
-
-                                        return true;
-                                }
-                        } else{
-                                return false;
-                        }
-                } else {
-                        return false;
-                }
+                createDb(com);
         }
 
         else if (cmp(mode,"show"))
         {
-                if (isShowDB(com)) {
+                showDb(com);
+        }
 
-                        if(showDb())
-                        {
-                                return true;
-                        }
-
-                }
-                else {
-                        return false;
-                }
+        else if (cmp(mode,"dropdb"))
+        {
+                dropDb(com);
         }
 
         else if(cmp(mode,"exit"))
         {
-            exit(0);
+                exit(0);
         }
-
 
         else
         {
-          std::cout << "FATAL ERROR" << std::endl;
+                fatalerror();
         }
 
+}
+
+void fatalerror()
+{
+        std::cout << "FATAL ERROR" << std::endl;
 }
 
 
