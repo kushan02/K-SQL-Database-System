@@ -17,14 +17,32 @@ int main()
 
         // TODO: Link the tables once completed with the given database
 
-        char db[100];
-        while(1)
+        /*  char db[255];
+           while(1)
+           {
+                  std::cout << "ksql>> ";
+                  gets(db);
+                  parse(db);
+                  std::cout << std::endl;
+           }
+         */
+        cout<<"sql: ";
+        char ar[255];
+        gets(ar);
+
+        while(!parse(ar))
         {
-                std::cout << "ksql>> ";
-                gets(db);
-                parse(db);
-                std::cout << std::endl;
+                cout<<"  -> ";
+                gets(ar);
+
+
         }
+
+        cout<<endl<<"SUCCESS"<<endl;
+
+        sql.disp();
+
+
 
 
         return 0;
