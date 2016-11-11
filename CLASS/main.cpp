@@ -1,6 +1,23 @@
+#include <iostream>
+#include <string.h>
+#include <process.h>
+#include <stdio.h>
+#include <ctype.h>
+
+#include "global.h"
+#include "parse.h"
+//#include "handler.h"
+#include "identify.h"
 #include "ksql.h"
-//#include "global.h"
-//#include "parse.h"
+
+
+
+
+
+
+
+
+//
 
 int main() {
 

@@ -5,53 +5,36 @@
 #ifndef ksqldef
 #define ksqldef
 
-#include <iostream>
-#include <string.h>
-#include <process.h>
-
-#include "global.h"
-#include "parse.h"
-//#include "identify.h"
-//#include "handler.h"
-
-
 using namespace std;
 
 
-class KSQL {
+class KSQL : protected IDENTIFY
+{
 
 protected:
-char db[255];
+
 
 public:
 
+KSQL()
+{
+        initvarparse();
+}
+
 void init()
 {
-        process();
+        begin();
 }
 
 private:
-
-PARSE parse;
-
-void process();
+void begin()
+{
+        process();
+        identify();
+        std::cout << "mode: " << mode<<'\n';
+}
 
 };
 
-void KSQL::process()
-{
-        while(!parse.parse())
-        {
-                cout<<"  -> ";
-                gets(db);
-        }
-
-        parse.disp();
-
-        //      identify.identify();
-        //      handler.hanlder();
-
-
-}
 
 #endif

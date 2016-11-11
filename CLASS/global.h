@@ -4,13 +4,13 @@
 
 #ifndef globaldef
 #define globaldef
-
-#include <iostream>
-#include <string.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <process.h>
-
+/*
+ #include <iostream>
+ #include <string.h>
+ #include <stdio.h>
+ #include <ctype.h>
+ #include <process.h>
+ */
 
 //class KSQL;
 //class PARSE;
@@ -18,6 +18,8 @@
 //#include "ksql.h"
 //#include "parse.h"
 
+class PARSE;
+class KSQL;
 
 
 // TODO : Add specific error with detailed cause... can be done at end

@@ -5,27 +5,28 @@
 #ifndef parsedef
 #define parsedef
 
-#include <iostream>
-#include <string.h>
-#include <process.h>
-
-#include "ksql.h"
-#include "global.h"
-//#include "identify.h"
-//#include "handler.h"
-
-//class KSQL;
-
 using namespace std;
 
-
-class PARSE : protected KSQL
+class PARSE
 {
 protected:
 char com[index1][index2];      // Double Dimensional Array to store the parsed sql command
-char mode[50];      // to identify the mode of sql command to execute
+void process();
+
+void initvarparse()
+{
+        i = 0, j = 0;
+        sp = false;
+        word = 0, line = 0;
+        bracket = false; brin = false;
+        bfcount=0;
+        semicolon = false;
+        //  db[0] = '\0';
+}
+
 
 private:
+char db[255];
 int len;
 int i,j;
 bool sp;         // Check for consecutive spacing
@@ -35,47 +36,36 @@ bool brin;         // Internal bracket check
 int bfcount;         // Count the no. of brackets opened
 bool semicolon;         // Bool to keep an eye of termination of statement
 
-
+void parselogic();   // Main Parsing Logic
 
 public:
 
-PARSE()
-{
-        i = 0, j = 0;
-        sp = false;
-        word = 0, line = 0;
-        bracket = false; brin = false;
-        bfcount=0;
-        semicolon = false;
-        //    db[0] = '\0';
-}
 
 void disp();   // Display the parsed command
 
 bool parse()
 {
-        bool ret;
-        static char emp[] = " ";
+        static bool ret;
 
         if(db[strlen(db)-1]==';')
         {
                 ret = true;
                 semicolon = true;
-                //  parselogic(db);
                 parselogic();
         }
         else {
                 ret = false;
-                //parselogic(emp);
-                //parselogic(db);
+
+                if(bracket==false)
+                {
+                        enterline();
+                }
                 parselogic();
         }
         return ret;
 }
 
-private:
 
-void parselogic();   // Main Parsing Logic
 
 
 void newline() // Function to switch to new line in double dimensional array
@@ -98,40 +88,69 @@ void sameline()
         sp =  false;
 }
 
+void enterline() // Function for consecutive input of new line if semicolon is not present
+{
+        if(sp==false)   // If there is a consecutive space, continue.
+        {
+                sp = true; // Flag to indicate there has been a recent space
+                com[line][word] = '\0';
+                word = 0; // Else we parse each word in a new array row (double dimensional)
+
+        }
+
+}
 
 };
 
+void PARSE::process()
+{
+        gets(db);
+        while(!parse())
+        {
+                cout<<"  -> ";
+                gets(db);
+
+        }
+
+        disp();
+
+}
+
 void PARSE::parselogic()
 {
-        len = strlen(db); // Calculate the length of the command entered
+
+        len = strlen(db);         // Calculate the length of the command entered
+
 
 
         for (i = 0; i < len; i++) {
 
-                if (db[i] == ' ' && bracket == false) {  // CONDITION ONLY IF THE ENTERED CHAR IS SPACE
-
+                if (db[i] == ' ' && bracket == false) {         // CONDITION ONLY IF THE ENTERED CHAR IS SPACE
                         // If there is a space and there are no brackets opened for Parameters
 
-                        if(sp==true) // If there is a consecutive space, continue.
+                        if(sp==true)         // If there is a consecutive space, continue.
                         {
                                 continue;
                         }
                         else
                         {
-                                newline(); // Else we parse each word in a new array row (double dimensional)
+                                newline();         // Else we parse each word in a new array row (double dimensional)
 
                         }
 
-                } else {   // If the current character is not a space and just a regular letter of special character
+                }
+
+
+                else {           // If the current character is not a space and just a regular letter of special character
 
                         if(db[i] == '(' && bfcount<1)
                         {
                                 //  cout<<endl<<"bracket counter is: "<<i<<endl;
                                 // We check if the char entered is a bracket and it is the main bracket for Parameters
 
-                                if(db[0]!='(') // We check if the bracket is not the first char of new line
+                                if(db[0]!='(')         // We check if the bracket is not the first char of new line
                                 {
-                                        if(db[i-1]!=' ') // if there is no space between tbname and parameter, insert all the parameter in one line
+                                        if(db[i-1]!=' ')         // if there is no space between tbname and parameter, insert all the parameter in one line
                                         {
                                                 newline();
 
@@ -140,13 +159,13 @@ void PARSE::parselogic()
 
                                 sameline();
 
-                                bracket = true; // Bool for main bracket beginning
+                                bracket = true;         // Bool for main bracket beginning
 
-                                bfcount++; // Add a counter so that only the first time the main bracket is initialized
+                                bfcount++;         // Add a counter so that only the first time the main bracket is initialized
                         }
-                        else if(db[i] == '(' && bfcount>=1) // If the main bracket is already initialized
+                        else if(db[i] == '(' && bfcount>=1)         // If the main bracket is already initialized
                         {
-                                brin = true; // Bool for beginning of internal bracket (inside the parameters)
+                                brin = true;         // Bool for beginning of internal bracket (inside the parameters)
                                 bfcount++;
                                 sameline();
                         }
@@ -173,31 +192,47 @@ void PARSE::parselogic()
 
         }
 
-        com[line][word] = '\0';     // Complete the last word of the array
+        com[line][word] = '\0';         // Complete the last word of the array
 
         com[line+1][0] = '\0';         // Check for seeing the name of database is single word
 
         if(semicolon == true)
         {
-                com[line][word-1] = '\0';     // Remove semicolon
+                com[line][word-1] = '\0';         // Remove semicolon
+
 
         }
 
+
 }
+
 
 void PARSE::disp() // public function to check the parsed command
 {
+        // Detailed Analysis of error with index number wise character allocation
+        /*
+           cout<<endl;
+           for (int i = 0; i < line + 1; ++i) {
+
+                  for (int j = 0; j < strlen(com[i]); ++j) {
+                          cout<<"["<<i<<"]"<<"["<<j<<"] : ";
+                          cout << com[i][j]<<" , ";
+                  }
+                  cout << endl;
+           }
+         */
         cout<<endl;
         for (int i = 0; i < line + 1; ++i) {
 
                 for (int j = 0; j < strlen(com[i]); ++j) {
-
                         cout << com[i][j];
                 }
                 cout << endl;
         }
 
         cout<<endl;
+
+        cout<<"0 INDEX: "<<com[0]<<endl;
 }
 
 #endif

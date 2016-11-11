@@ -4,18 +4,20 @@
 
 #ifndef indentifydef
 #define indentifydef
+/*
+ #include <string.h>
 
-#include <string.h>
-
-#include "global.h"
-#include "parse.h"
-#include "handler.h"
-#include "ksql.h"
-
+ #include "global.h"
+ #include "parse.h"
+ #include "handler.h"
+ #include "ksql.h"
+ */
 using namespace std;
 
-class IDENTIFY
+class IDENTIFY : protected PARSE
 {
+protected:
+char mode[50];
 
 public:
 void identify()
