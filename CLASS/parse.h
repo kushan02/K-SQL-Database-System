@@ -25,6 +25,12 @@ int line, word, i;
 char ch;
 bool sp, bracket, brin, qoute;
 
+void cleararray()
+{
+        memset(sql, 0, sizeof(sql[0][0]) * index1 * index2);
+
+}
+
 void setvar()
 {
         line = 0;
@@ -34,6 +40,7 @@ void setvar()
         bracket = false;
         brin = false;
         qoute = false;
+        cleararray();
 }
 
 void newline()
