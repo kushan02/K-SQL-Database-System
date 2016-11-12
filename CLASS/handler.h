@@ -5,61 +5,71 @@
 #ifndef handlerdefmy
 #define handlerdefmy
 
-#include <iostream>
-#include <string.h>
-#include <fstream>
-#include <iomanip>
-#include <process.h>
-
-#include "global.h"
-#include "parse.h"
-#include "identify.h"
-#include "ksql.h"
-
-class HANDLER
+class HANDLER : protected IDENTIFY
 {
+// to identify the mode of sql command to execute
+protected:
+char logic[20];
 
 public:
 void handler()
 {
-        //  handlerlogic();
+        handlerlogic();
 }
 private:
 void handlerlogic()
 {
-        /*
-              // CREATE DATABASE MODE
-              if(cmp(sql.mode,"createdb"))
-              {
-                      createDb(sql.com);
-              }
+/*
+        // CREATE DATABASE MODE
+        if(cmp(mode,"createdb"))
+        {
+                createDb(com);
+        }
 
-              else if (cmp(sql.mode,"createt"))
-              {
-                      createT(sql.com);
-                      //  createT(sql.com);
-              }
+        else if (cmp(mode,"createt"))
+        {
+                createT(com);
+        }
 
-              else if (cmp(sql.mode,"show"))
-              {
-                      showDb(sql.com);
-              }
+        else if (cmp(mode,"show"))
+        {
+                showDb(com);
+        }
 
-              else if (cmp(sql.mode,"dropdb"))
-              {
-                      dropDb(sql.com);
-              }
+        else if (cmp(mode,"dropdb"))
+        {
+                dropDb(com);
+        }
 
-              else if(cmp(sql.mode,"exit"))
-              {
-                      exit(0);
-              }
+        else if(cmp(mode,"exit"))
+        {
+                exit(0);
+        }
 
-              else
-              {
-                      cout<<endl<<"FATAL ERROR";
-              }
-         */
+        else
+        {
+                cout<<endl<<"FATAL ERROR";
+        }
+ */
+
+        if(cmp(mode,"createdb") || cmp(mode,"dropdb") || cmp(mode,"show"))
+        {
+                strcpy(logic,"database");
+        }
+        else if(cmp(mode,"createt") /* || cmp(mode,"dropdb") || cmp(mode,"show") */)
+        {
+                strcpy(logic,"table");
+        }
+        else if(cmp(mode,"exit"))
+        {
+                //    exit(0);
+        }
+        else
+        {
+                strcpy(logic,"error");
+                cout<<endl<<"FATAL ERROR"<<endl;
+        }
+
 }
 
 

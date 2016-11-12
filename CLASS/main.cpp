@@ -1,28 +1,24 @@
 #include <iostream>
 #include <string.h>
-#include <process.h>
+#include <cstdlib>
+#include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <fstream>
+#include <iomanip>
+#include <conio.h>
 
 #include "global.h"
+
 #include "parse.h"
-//#include "handler.h"
 #include "identify.h"
+#include "handler.h"
+
 #include "ksql.h"
-
-
-
-
-
-
-
-
-//
 
 int main() {
 
-        //  SQL sql;
-        //  PARSE parse;
+        cls();
         KSQL sql;
         sql.init();
         return 0;

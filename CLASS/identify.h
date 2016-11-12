@@ -4,14 +4,7 @@
 
 #ifndef indentifydef
 #define indentifydef
-/*
- #include <string.h>
 
- #include "global.h"
- #include "parse.h"
- #include "handler.h"
- #include "ksql.h"
- */
 using namespace std;
 
 class IDENTIFY : protected PARSE
@@ -28,50 +21,50 @@ private:
 void identifylogic() {
 
         // SELECT COMMAND
-        if(cmp(com[0],"select"))
+        if(cmp(sql[0],"select"))
         {
                 strcpy(mode, "select");
         }
 
 // CREATE COMMAND
-        else if(cmp(com[0],"create"))
+        else if(cmp(sql[0],"create"))
         {
-                if (cmp(com[1], "table")) {
+                if (cmp(sql[1], "table")) {
                         strcpy(mode, "createt");
                 } else {
                         strcpy(mode, "createdb");
                 }
         }
 
-        else if(cmp(com[0],"insert"))
+        else if(cmp(sql[0],"insert"))
         {
                 strcpy(mode, "insert");
         }
-        else if(cmp(com[0],"update"))
+        else if(cmp(sql[0],"update"))
         {
                 strcpy(mode, "update");
         }
-        else if(cmp(com[0],"delete"))
+        else if(cmp(sql[0],"delete"))
         {
                 strcpy(mode, "delete");
         }
-        else if(cmp(com[0],"drop"))
+        else if(cmp(sql[0],"drop"))
         {
-                if (cmp(com[1], "table")) {
+                if (cmp(sql[1], "table")) {
                         strcpy(mode, "dropt");
                 } else {
                         strcpy(mode, "dropdb");
                 }
         }
-        else if(cmp(com[0],"use"))
+        else if(cmp(sql[0],"use"))
         {
                 strcpy(mode, "use");
         }
-        else if(cmp(com[0],"show"))
+        else if(cmp(sql[0],"show"))
         {
                 strcpy(mode, "show");
         }
-        else if(cmp(com[0],"exit"))
+        else if(cmp(sql[0],"exit"))
         {
                 strcpy(mode,"exit");
         }

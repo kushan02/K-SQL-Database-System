@@ -8,7 +8,7 @@
 using namespace std;
 
 
-class KSQL : protected IDENTIFY
+class KSQL : protected HANDLER
 {
 
 protected:
@@ -16,10 +16,6 @@ protected:
 
 public:
 
-KSQL()
-{
-        initvarparse();
-}
 
 void init()
 {
@@ -27,14 +23,26 @@ void init()
 }
 
 private:
-void begin()
+void begin();
+};
+
+void KSQL::begin()
 {
-        process();
-        identify();
-        std::cout << "mode: " << mode<<'\n';
+        while(1)
+        {
+                cout<<endl<<" ksql> ";
+                parse();
+                identify();
+                handler();
+                std::cout << "mode: " << mode<<'\n';
+                std::cout << "logic: " << logic<<'\n';
+                if(cmp(mode,"exit"))
+                {
+                        exit(0);
+                }
+        }
 }
 
-};
 
 
 #endif

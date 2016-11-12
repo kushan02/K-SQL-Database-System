@@ -1,40 +1,25 @@
-//
-// Created by Kushan Mehta on 26-10-2016.
-//
-
-#ifndef parsedef
-#define parsedef
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <conio.h>
 
 using namespace std;
 
 
-class PARSE
-{
-protected:
-char sql[index1][index2];
+char ar[50000];
+char sql[50][10000];
 
-public:
-void parse()
-{
-        setvar();
-        parselogic();
-}
+int line = 0, word = 0;
 
-private:
-int line, word, i;
+int letter = 0;
 char ch;
-bool sp, bracket, brin, qoute;
 
-void setvar()
-{
-        line = 0;
-        word = 0;
-        i=0;
-        sp = false;
-        bracket = false;
-        brin = false;
-        qoute = false;
-}
+int i=0;
+
+bool sp = false;
+bool bracket = false;
+bool brin = false;
+bool qoute = false;
 
 void newline()
 {
@@ -117,14 +102,10 @@ bool enter()
 
 
 
-void parselogic();
-void display();
-
-
-};
-
-void PARSE::parselogic()
+int main()
 {
+
+        cout<<endl<<" ksql> ";
         while(1)
         {
 
@@ -294,11 +275,8 @@ void PARSE::parselogic()
         }
 
         sql[line][i]='\0';
-        display();
-}
 
-void PARSE::display()
-{
+
         cout<<endl<<endl<<"-----------------"<<endl;
         for (size_t i = 0; i < line+1; i++) {
                 for (size_t j = 0; j < strlen(sql[i]); j++) {
@@ -308,7 +286,6 @@ void PARSE::display()
                 cout<<endl;
                 /* code */
         }
+
+        return 0;
 }
-
-
-#endif

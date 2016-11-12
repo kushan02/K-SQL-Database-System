@@ -4,19 +4,7 @@
 
 #ifndef globaldef
 #define globaldef
-/*
- #include <iostream>
- #include <string.h>
- #include <stdio.h>
- #include <ctype.h>
- #include <process.h>
- */
 
-//class KSQL;
-//class PARSE;
-
-//#include "ksql.h"
-//#include "parse.h"
 
 class PARSE;
 class KSQL;
@@ -37,6 +25,11 @@ bool cmp(const string& a, const string& b)
                 if (tolower(a[i]) != tolower(b[i]))
                         return false;
         return true;
+}
+
+void cls()
+{
+        system("cls");
 }
 
 #endif
