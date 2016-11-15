@@ -67,7 +67,7 @@ bool isCreateDB() {
 
 bool isCreateT() {
 
-        bool create = true, table = true, tname = true;
+        bool create = true, table = true, tname = true, par = true;
 
         if (!cmp(sql[0], "create")) {
                 create = false;
@@ -80,9 +80,13 @@ bool isCreateT() {
         {
                 tname = false;
         }
+        if(!(strlen(sql[3])>0))
+        {
+                par = false;
+        }
 
 
-        if(create == true & table == true && tname == true)
+        if(create == true & table == true && tname == true && par == true)
         {
                 return true;
         }
@@ -92,6 +96,11 @@ bool isCreateT() {
                 if(tname == false)
                 {
                         cout<<"ERROR: Please specify a allowed name for table";
+                }
+
+                else if(par == false)
+                {
+                        cout<<"ERROR: No parameters for fields to create for the table supplied.";
                 }
 
                 else

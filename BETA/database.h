@@ -9,6 +9,8 @@ using namespace std;
 
 class DATABASE : protected ERRORS
 {
+protected:
+char db_name[50];
 
 char folder_path[100], file_path[100], open_path[100];
 fstream f;
@@ -45,6 +47,12 @@ struct dbEntry
 } obj;
 
 protected:
+
+bool useDB()
+{
+
+}
+
 
 bool createFolder()
 {

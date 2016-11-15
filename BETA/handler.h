@@ -5,7 +5,7 @@
 #ifndef handlerdefmy
 #define handlerdefmy
 
-class HANDLER :  protected DATABASE
+class HANDLER :  protected TABLE
 {
 protected:
 
@@ -46,7 +46,8 @@ void handlerlogic()
         {
                 if(isCreateT())
                 {
-                        cout<<"Create table sytax correct";
+                        //  cout<<"Create table sytax correct";
+                        parse_tb();
                 }
         }
 
