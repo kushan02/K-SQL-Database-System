@@ -23,7 +23,7 @@ void parse()
 private:
 int line, word, i;
 char ch;
-bool sp, bracket, brin, qoute;
+bool sp, bracket, brin, qoute, semicol;
 
 void cleararray()
 {
@@ -40,6 +40,7 @@ void setvar()
         bracket = false;
         brin = false;
         qoute = false;
+        semicol = false;
         cleararray();
 }
 
@@ -137,14 +138,18 @@ void PARSE::parselogic()
 
                 ch = getch();
 
-
-                if(ch==';')
+                if(enter() && semicol == true)
                 {
                         break;
                 }
+                else if(ch==';')
+                {
+                        //    break;
+                        semicol = true;
+                }
                 else if(isbackspace())
                 {
-                        if(i>0 || sp == false)
+                        if(i>0 || strlen(sql[line-1])>0)
                         {
                                 backspace();
                         }
@@ -301,7 +306,7 @@ void PARSE::parselogic()
         }
 
         sql[line][i]='\0';
-        display();
+        //  display();
 }
 
 void PARSE::display()
@@ -310,10 +315,8 @@ void PARSE::display()
         for (size_t i = 0; i < line+1; i++) {
                 for (size_t j = 0; j < strlen(sql[i]); j++) {
                         cout<<sql[i][j];
-                        /* code */
                 }
                 cout<<endl;
-                /* code */
         }
 }
 

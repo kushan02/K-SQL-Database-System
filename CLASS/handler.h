@@ -5,70 +5,88 @@
 #ifndef handlerdefmy
 #define handlerdefmy
 
-class HANDLER : protected IDENTIFY
+class HANDLER :  protected TABLE
 {
-// to identify the mode of sql command to execute
 protected:
-char logic[20];
 
-public:
 void handler()
 {
         handlerlogic();
 }
+
 private:
+
 void handlerlogic()
 {
-/*
-        // CREATE DATABASE MODE
-        if(cmp(mode,"createdb"))
+        cout<<endl<<endl;
+
+        // TODO: Develop Tables
+
+        if(cmp(mode,"createdb")) // Create Database
         {
-                createDb(com);
+                if(isCreateDB())
+                {
+                        if(addEntrydb()) {
+
+                                if(createFolder()) {
+                                        cout << "Database "<<sql[2]<<" created Successfully! ";
+
+
+                                }
+                        } else{
+
+                                cout << "Database "<<sql[2]<<" already exists! ";
+
+                        }
+                }
         }
 
-        else if (cmp(mode,"createt"))
+
+        else if (cmp(mode,"createt")) // Create Table
         {
-                createT(com);
+                if(isCreateT())
+                {
+                        //  cout<<"Create table sytax correct";
+                        parse_tb();
+                }
         }
 
-        else if (cmp(mode,"show"))
+        else if (cmp(mode,"show")) // Show Databases
         {
-                showDb(com);
+                if(isShowDB()) {
+                        if(!showDb())
+                        {
+                                cout<<"No Databases exists.";
+                        }
+                }
+
         }
 
-        else if (cmp(mode,"dropdb"))
+        else if (cmp(mode,"dropdb")) // Drop Database
         {
-                dropDb(com);
+                if(isDropDB()) {
+                        if(dropDB())
+                        {
+                                cout<< "Database " << sql[2] <<" deleted Successfully!";
+                        }
+                        else
+                        {
+                                cout<< "Database " << sql[2] << " does not exist. Please select a existing database.";
+                        }
+                }
         }
 
         else if(cmp(mode,"exit"))
         {
+                cout<<"Bye"<<endl;
                 exit(0);
         }
 
         else
         {
-                cout<<endl<<"FATAL ERROR";
+                cout<<"Please Enter a valid KSQL Command.";
         }
- */
-
-        if(cmp(mode,"createdb") || cmp(mode,"dropdb") || cmp(mode,"show"))
-        {
-                strcpy(logic,"database");
-        }
-        else if(cmp(mode,"createt") /* || cmp(mode,"dropdb") || cmp(mode,"show") */)
-        {
-                strcpy(logic,"table");
-        }
-        else if(cmp(mode,"exit"))
-        {
-                //    exit(0);
-        }
-        else
-        {
-                strcpy(logic,"error");
-                cout<<endl<<"FATAL ERROR"<<endl;
-        }
+        cout<<endl;
 
 }
 

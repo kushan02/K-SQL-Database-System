@@ -7,8 +7,26 @@
 
 using namespace std;
 
-class DATABASE
+class DATABASE : protected ERRORS
 {
+protected:
+char db_name[50];
+
+char folder_path[100], file_path[100], open_path[100];
+fstream f;
+
+public:
+
+DATABASE()
+{
+        strcpy(folder_path,"\\files\\databases\\");
+        strcpy(file_path,"\\files\\databases\\DBRECORD.ksh");
+        //  strcpy(path,(char *) getFolderDir().c_str());
+        strcpy(open_path,"files/databases/DBRECORD.ksh");
+        //    strcat(path, folder_path );
+}
+
+private:
 
 string getFolderDir() {
         char buffer[MAX_PATH];
@@ -23,20 +41,29 @@ string getfilepath()
         return string( result, GetModuleFileName( NULL, result, MAX_PATH ) );
 }
 
+struct dbEntry
+{
+        char dbName[50];
+} obj;
 
-bool createFolder(const char * fname)
+protected:
+
+bool useDB()
+{
+
+}
+
+
+bool createFolder()
 {
 
         //GET THE PATH OF EXE
         char path[100];
         strcpy(path,(char *) getFolderDir().c_str());
 
-        strcat(path, "\\files\\databases\\" );
+        strcat(path, folder_path );
 
-        strcat(path, fname);
-
-        // cout<<path<<endl;
-
+        strcat(path, sql[2]);
 
         if(!CreateDirectory(path,NULL))
         {
@@ -48,26 +75,33 @@ bool createFolder(const char * fname)
 }
 
 
-struct dbEntry
-{
-        char dbName[50];
-};
+
 
 bool addEntrydb()
 {
 
-        fstream f;
-
         char path[100];
+
         strcpy(path,(char *) getFolderDir().c_str());
 
-        strcat(path, "\\files\\databases\\DBRECORD.DAT" );
+        strcat(path, file_path );
+
+        f.open(path,ios::in);
+        while(f.read( (char *)&obj,sizeof(obj) ) )
+        {
+                if(cmp(obj.dbName,sql[2]))
+                {
+                        f.close();
+                        return false;
+                }
+        }
+
+        f.close();
 
 
         f.open(path,ios::out|ios::app);
 
-        dbEntry obj;
-        strcpy(obj.dbName,ename);
+        strcpy(obj.dbName,sql[2]);
         if(!f.write( (char *)&obj, sizeof(obj)))
         {
                 f.close();
@@ -79,25 +113,19 @@ bool addEntrydb()
 
 }
 
-
-protected:
-
 bool showDb()
 {
-        fstream f;
 
+        //    f.open("files/databases/DBRECORD.dat",ios::in);
 
-        f.open("files/databases/DBRECORD.dat",ios::in);
+        f.open(open_path,ios::in);
 
         if(!f)
         {
                 return false;
         }
 
-
-        dbEntry obj;
-
-        cout<<endl<<"+-------------------------+";
+        cout<<"+-------------------------+";
         cout<<endl;
         cout<<"| DATABASES               |";
         cout<<endl;
@@ -115,10 +143,8 @@ bool showDb()
         }
 
         cout<<"+-------------------------+";
-        cout<<endl;
 
         f.close();
-        delete(f);
 
         return true;
 }
@@ -126,11 +152,10 @@ bool showDb()
 
 bool dropDB()
 {
-        // TODO: Delete the folder also
 
-
-        fstream f,o;
-        f.open("files/databases/DBRECORD.dat",ios::in);
+        fstream o;
+        //    f.open("files/databases/DBRECORD.dat",ios::in);
+        f.open(open_path,ios::in);
         o.open("files/databases/temp.dat",ios::out);
 
         if(!f)
@@ -138,17 +163,23 @@ bool dropDB()
                 return false;
         }
 
-
-        dbEntry obj;
-
         bool found=false;
+
+        char del[100];
+        strcpy(del,"rmdir /Q /S ");
+        strcat(del,(char *) getFolderDir().c_str());
+        strcat(del,folder_path);
+        strcat(del,sql[2]);
 
         while(f.read((char*)&obj, sizeof(obj)))
         {
 
-                if(cmp(obj.dbName,name))
+                if(cmp(obj.dbName,sql[2]))
                 {
                         found = true;
+
+                        system(del);
+
                         continue;
                 }
 
@@ -158,11 +189,12 @@ bool dropDB()
         f.close();
         o.close();
 
-        delete(f);
-        delete(o);
+        //  remove("files/databases/DBRECORD.dat");
+        //  rename("files/databases/temp.dat","files/databases/DBRECORD.dat");
 
-        remove("files/databases/DBRECORD.dat");
-        rename("files/databases/temp.dat","files/databases/DBRECORD.dat");
+
+        remove(open_path);
+        rename("files/databases/temp.dat",open_path);
 
 
         if(found==true)

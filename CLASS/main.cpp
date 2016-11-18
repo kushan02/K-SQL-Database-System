@@ -7,11 +7,16 @@
 #include <fstream>
 #include <iomanip>
 #include <conio.h>
+#include <windows.h>
+#include <time.h>
 
 #include "global.h"
 
 #include "parse.h"
 #include "identify.h"
+#include "errors.h"
+#include "database.h"
+#include "table.h"
 #include "handler.h"
 
 #include "ksql.h"

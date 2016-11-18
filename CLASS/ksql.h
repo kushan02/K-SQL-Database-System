@@ -15,7 +15,10 @@ protected:
 
 
 public:
-
+KSQL()
+{
+        timer = 0;
+}
 
 void init()
 {
@@ -23,6 +26,9 @@ void init()
 }
 
 private:
+clock_t cl;
+double timer;
+
 void begin();
 };
 
@@ -30,16 +36,19 @@ void KSQL::begin()
 {
         while(1)
         {
-                cout<<endl<<" ksql> ";
+
+                cout<<endl<<"ksql> ";
                 parse();
+
+                cl = clock();
+
                 identify();
                 handler();
-                std::cout << "mode: " << mode<<'\n';
-                std::cout << "logic: " << logic<<'\n';
-                if(cmp(mode,"exit"))
-                {
-                        exit(0);
-                }
+
+                cl = clock() - cl;
+                timer = cl /(long double) CLOCKS_PER_SEC;
+
+                cout<<endl<<"Query executed in ("<< timer<<" sec)"<<endl;
         }
 }
 

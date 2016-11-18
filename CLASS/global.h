@@ -9,7 +9,6 @@
 class PARSE;
 class KSQL;
 
-
 // TODO : Add specific error with detailed cause... can be done at end
 
 using namespace std;

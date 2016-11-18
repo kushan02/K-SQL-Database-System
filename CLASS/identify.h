@@ -26,49 +26,75 @@ void identifylogic() {
                 strcpy(mode, "select");
         }
 
-// CREATE COMMAND
+        // Create
         else if(cmp(sql[0],"create"))
         {
                 if (cmp(sql[1], "table")) {
                         strcpy(mode, "createt");
-                } else {
+                }
+
+                else if (cmp(sql[1], "database"))  {
+
                         strcpy(mode, "createdb");
+                }
+                else
+                {
+                        strcpy(mode,"error");
                 }
         }
 
+        // Insert
         else if(cmp(sql[0],"insert"))
         {
                 strcpy(mode, "insert");
         }
+
+        // Update
         else if(cmp(sql[0],"update"))
         {
                 strcpy(mode, "update");
         }
+
+        // Delete
         else if(cmp(sql[0],"delete"))
         {
                 strcpy(mode, "delete");
         }
+
+        // Drop
         else if(cmp(sql[0],"drop"))
         {
                 if (cmp(sql[1], "table")) {
                         strcpy(mode, "dropt");
-                } else {
+                }
+                else if (cmp(sql[1], "database"))  {
                         strcpy(mode, "dropdb");
                 }
+                else
+                {
+                        strcpy(mode,"error");
+                }
         }
+
+        // Use
         else if(cmp(sql[0],"use"))
         {
                 strcpy(mode, "use");
         }
+
+        // Show
         else if(cmp(sql[0],"show"))
         {
                 strcpy(mode, "show");
         }
+
+        // Exit
         else if(cmp(sql[0],"exit"))
         {
                 strcpy(mode,"exit");
         }
 
+        // Error
         else
         {
                 strcpy(mode, "error");
