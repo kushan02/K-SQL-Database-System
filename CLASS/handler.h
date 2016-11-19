@@ -28,11 +28,11 @@ void handlerlogic()
                 {
                         if(addEntrydb()) {
 
-                                if(createFolder()) {
-                                        cout << "Database "<<sql[2]<<" created Successfully! ";
+                                //      if(createFolder()) {
+                                cout << "Database "<<sql[2]<<" created Successfully! ";
 
 
-                                }
+                                //    }
                         } else{
 
                                 cout << "Database "<<sql[2]<<" already exists! ";
@@ -44,20 +44,54 @@ void handlerlogic()
 
         else if (cmp(mode,"createt")) // Create Table
         {
-                if(isCreateT())
+                if(tUse())
                 {
-                        //  cout<<"Create table sytax correct";
-                        parse_tb();
+                        if(isCreateT())
+                        {
+                                //  cout<<"Create table sytax correct";
+                                if(table())
+                                {
+                                        //    parse_tb();
+                                        cout<<"Table "<<sql[2]<<" created!";
+                                }
+                                else
+                                {
+                                        cout<<"Table "<<sql[2]<<" already exists!";
+                                }
+                        }
+
+                }
+                else
+                {
+                        cout<<"No database in use";
                 }
         }
 
-        else if (cmp(mode,"show")) // Show Databases
+        else if (cmp(mode,"showdb")) // Show Databases
         {
                 if(isShowDB()) {
                         if(!showDb())
                         {
                                 cout<<"No Databases exists.";
                         }
+                }
+
+        }
+
+        else if (cmp(mode,"showt")) // Show Databases
+        {
+                if(tUse())
+                {
+                        if(isShowT()) {
+                                if(!showT())
+                                {
+                                        cout<<"No Tables exists";
+                                }
+                        }
+                }
+                else
+                {
+                        cout<<"No database in use";
                 }
 
         }
@@ -75,6 +109,22 @@ void handlerlogic()
                         }
                 }
         }
+        else if (cmp(mode,"use")) // Use Database
+        {
+                if(useDB())
+                {
+                        cout<<"Database "<<sql[1]<<" in use.";
+                }
+
+        }
+        else if (cmp(mode,"insert")) // Insert into Table
+        {
+                if(isInsertT())
+                {
+                        cout<<"CORRECT";
+                }
+        }
+
 
         else if(cmp(mode,"exit"))
         {

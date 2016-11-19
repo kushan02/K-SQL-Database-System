@@ -16,6 +16,7 @@
 #include "identify.h"
 #include "errors.h"
 #include "database.h"
+#include "create.h"
 #include "table.h"
 #include "handler.h"
 

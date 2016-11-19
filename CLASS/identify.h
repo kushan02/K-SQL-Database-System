@@ -85,7 +85,12 @@ void identifylogic() {
         // Show
         else if(cmp(sql[0],"show"))
         {
-                strcpy(mode, "show");
+                if (cmp(sql[1], "tables")) {
+                        strcpy(mode, "showt");
+                }
+                else if (cmp(sql[1], "databases"))  {
+                        strcpy(mode, "showdb");
+                }
         }
 
         // Exit

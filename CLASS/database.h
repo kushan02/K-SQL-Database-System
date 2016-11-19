@@ -19,10 +19,11 @@ public:
 
 DATABASE()
 {
-        strcpy(folder_path,"\\files\\databases\\");
-        strcpy(file_path,"\\files\\databases\\DBRECORD.ksh");
+        strcpy(folder_path,"\\files\\");
+        strcpy(file_path,"\\files\\DBRECORD.ksh");
         //  strcpy(path,(char *) getFolderDir().c_str());
-        strcpy(open_path,"files/databases/DBRECORD.ksh");
+        strcpy(open_path,"files/DBRECORD.ksh");
+        db_name[0] = '\0';
         //    strcat(path, folder_path );
 }
 
@@ -50,6 +51,38 @@ protected:
 
 bool useDB()
 {
+        if(isUseDB())
+        {
+                if(existsDB())
+                {
+                        strcpy(db_name,sql[1]);
+                        //    cout<<"@@@@@   "<<db_name;
+                        return true;
+                }
+                else
+                {
+                        cout<<"Database "<<sql[1]<<" does not exist";
+                }
+        }
+
+        return false;
+}
+
+bool existsDB()
+{
+        fstream f;
+        f.open("files/DBRECORD.ksh",ios::in);
+        while(f.read((char *)&obj,sizeof(obj)))
+        {
+                if (cmp(obj.dbName,sql[1])) {
+
+                        return true;
+
+                }
+        }
+        f.close();
+        return false;
+
 
 }
 
@@ -156,7 +189,7 @@ bool dropDB()
         fstream o;
         //    f.open("files/databases/DBRECORD.dat",ios::in);
         f.open(open_path,ios::in);
-        o.open("files/databases/temp.dat",ios::out);
+        o.open("files/temp.dat",ios::out);
 
         if(!f)
         {
@@ -194,7 +227,7 @@ bool dropDB()
 
 
         remove(open_path);
-        rename("files/databases/temp.dat",open_path);
+        rename("files/temp.dat",open_path);
 
 
         if(found==true)
@@ -207,6 +240,7 @@ bool dropDB()
         }
 
 }
+
 
 };
 

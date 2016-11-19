@@ -16,6 +16,8 @@ protected:
    isCreateT
    isShowDB
    isDropDB
+   isUseDB
+   isInsertT
 
  */
 
@@ -39,7 +41,7 @@ bool isCreateDB() {
                 dsingle = false;
         }
 
-        if(create == true & data == true && dname == true && dsingle == true)
+        if(create == true && data == true && dname == true && dsingle == true)
         {
                 return true;
         }
@@ -86,7 +88,7 @@ bool isCreateT() {
         }
 
 
-        if(create == true & table == true && tname == true && par == true)
+        if(create == true && table == true && tname == true && par == true)
         {
                 return true;
         }
@@ -129,7 +131,7 @@ bool isShowDB() {
                 extra = false;
         }
 
-        if(show = true && data == true && extra == true)
+        if(show == true && data == true && extra == true)
         {
                 return true;
         }
@@ -149,6 +151,43 @@ bool isShowDB() {
 
         }
 }
+
+bool isShowT() {
+
+        bool show = true, data = true, extra = true;
+        if (!cmp(sql[0], "show")) {
+                show = false;
+        }
+        if(!cmp(sql[1], "tables"))
+        {
+                data = false;
+        }
+        if(sql[2][0] != '\0')
+        {
+                extra = false;
+        }
+
+        if(show == true && data == true && extra == true)
+        {
+                return true;
+        }
+
+        else {
+
+                if(extra == false)
+                {
+                        cout<<"ERROR: Unecessary syntax present. The correct syntax should be \" Show Tables \" ";
+                }
+                else
+                {
+                        cout<<"ERROR: The correct syntax should be \" Show Tables \" ";
+                }
+
+                return false;
+
+        }
+}
+
 
 bool isDropDB() {
 
@@ -170,7 +209,7 @@ bool isDropDB() {
                 dsingle = false;
         }
 
-        if(drop == true & data == true && dname == true && dsingle == true)
+        if(drop == true && data == true && dname == true && dsingle == true)
         {
                 return true;
         }
@@ -195,6 +234,104 @@ bool isDropDB() {
 
         }
 }
+
+bool isUseDB() {
+
+        bool use = true, nm = true, extra = true;
+        if (!cmp(sql[0], "use")) {
+                use = false;
+        }
+        if(sql[2][0] != '\0')
+        {
+                extra = false;
+        }
+        if(!(sql[1][0] != '\0'))
+        {
+                nm = false;
+        }
+
+        if(use == true && nm == true && extra == true)
+        {
+                return true;
+        }
+
+        else {
+
+                if(extra == false)
+                {
+                        cout<<"ERROR: Unecessary syntax present. The correct syntax should be \" Use DatabaseName \" ";
+                }
+                else
+                {
+                        cout<<"ERROR: The correct syntax should be \" Use DatabaseName \" ";
+                }
+
+                return false;
+
+        }
+}
+
+bool isInsertT() {
+
+        bool insert = true, into = true, values = true, tname = true, par1 = true, par2 = true;
+
+        if (!cmp(sql[0], "insert")) {
+                insert = false;
+        }
+        if(!cmp(sql[1], "into"))
+        {
+                into = false;
+        }
+        if(!cmp(sql[4], "values"))
+        {
+                into = false;
+        }
+        if(sql[2][0]=='\0' || sql[2][0]==' ')
+        {
+                tname = false;
+        }
+        if(sql[3][0]!='(')
+        {
+                par1 = false;
+        }
+        if(sql[5][0]!='(')
+        {
+                par2 = false;
+        }
+
+
+        if(insert == true && into == true && tname == true && values == true && par1 == true && par2 == true)
+        {
+                return true;
+        }
+
+        else {
+
+                if(tname == false)
+                {
+                        cout<<"ERROR: Please specify a allowed name for table";
+                }
+
+                else if(par1 == false)
+                {
+                        cout<<"ERROR: No parameters for fields to insert data into supplied.";
+                }
+                else if(par2 == false)
+                {
+                        cout<<"ERROR: No values to insert data supplied.";
+                }
+
+                else
+                {
+                        cout<<"ERROR: The correct syntax should be \" INSERT INTO table_name (column1,column2,column3,...) VALUES (value1,value2,value3,...); \" ";
+                }
+
+                return false;
+
+        }
+}
+
+
 };
 
 

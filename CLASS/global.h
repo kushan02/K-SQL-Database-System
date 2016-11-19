@@ -26,6 +26,26 @@ bool cmp(const string& a, const string& b)
         return true;
 }
 
+/*
+   void cat(char ar1[],char ar2[],char ar3[] = {'\0'},char ar4[]={'\0'},char ar5[]={'\0'}) // currently limit is max 5
+   {
+
+        strcat(ar1,ar2);
+        if(ar3[0]!='\0')
+        {
+                strcat(ar1,ar3);
+        }
+        if(ar4[0]!='\0')
+        {
+                strcat(ar1,ar4);
+        }
+        if(ar5[0]!='\0')
+        {
+                strcat(ar1,ar5);
+        }
+   }
+ */
+
 void cls()
 {
         system("cls");
